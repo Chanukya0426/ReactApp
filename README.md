@@ -1,3 +1,84 @@
+
+Here is the `Form.css` code to style your form component:
+
+```css
+.form-container {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+textarea {
+  width: 100%;
+  height: 60px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: none;
+  font-size: 16px;
+}
+
+select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: white;
+  cursor: pointer;
+}
+
+select[multiple] {
+  height: 100px;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:last-child {
+  background-color: #dc3545;
+}
+
+button:last-child:hover {
+  background-color: #a71d2a;
+}
+```
+
+### **Explanation:**
+- **Text areas** are styled for better readability.
+- **Select inputs** have a consistent design, and the multi-select has a larger height.
+- **Buttons** have hover effects and colors:
+  - Blue for "Compare"
+  - Red for "Refresh"
+
+Would you like any specific styling changes?
+
+
+
+
+
+
+
+
 Here’s a structured React project for your requirements. The project will have the following components:  
 
 - `App.js`: The main component  
