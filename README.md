@@ -1,3 +1,65 @@
+Here is the `Navbar.css` file to style your sidebar navigation:  
+
+```css
+.sidebar {
+  width: 220px;
+  background-color: #f8f9fa;
+  padding: 20px;
+  height: 100vh;
+  position: fixed;
+  top: 70px; /* To align below the header */
+  left: 0;
+  overflow-y: auto;
+  border-right: 2px solid #ddd;
+}
+
+.sidebar h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.sidebar ul ul {
+  margin-left: 15px;
+  font-weight: normal;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: #333;
+  display: block;
+  padding: 5px 0;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar a:hover {
+  background-color: #ddd;
+  border-radius: 5px;
+  padding-left: 5px;
+}
+```
+
+### **Explanation:**
+- The sidebar is **fixed** to the left of the page and extends the full height.
+- A **border-right** is added to separate it visually from the form.
+- Category names are **bold**, while sub-links are slightly indented.
+- Hover effects are added for better user interaction.
+
+Would you like any modifications or enhancements?
+
+
+
+
+
 
 Here is the `Form.css` code to style your form component:
 
