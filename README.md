@@ -1,190 +1,266 @@
-Here's the **React code** and **CSS styling** in separate files.  
+Here’s a structured React project for your requirements. The project will have the following components:  
+
+- `App.js`: The main component  
+- `Navbar.js`: The sidebar navigation  
+- `Form.js`: The form with text areas, a select dropdown, a multi-select dropdown, and buttons  
+- `App.css`: Styles  
 
 ---
 
-### **React Component (ConfigDriftValidator.js)**
+### **Project Structure**
+```
+/project-folder
+  /src
+    /components
+      Navbar.js
+      Form.js
+    App.js
+    App.css
+    index.js
+  package.json
+```
+
+---
+
+### **1. Navbar.js**  
+This component creates a sidebar with three categories, each containing three links.
+
 ```jsx
-import React, { useState } from "react";
-import "./ConfigDriftValidator.css"; // Import CSS file
+import React from "react";
+import "./Navbar.css";
 
-const ConfigDriftValidator = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("");
-  const [multiSelectOptions, setMultiSelectOptions] = useState([]);
-  const [availableOptions] = useState(["Option 1", "Option 2", "Option 3", "Option 4"]);
-
-  const handleSelectChange = (e) => {
-    setSelectedOption(e.target.value);
-    setMultiSelectOptions(availableOptions.filter((opt) => opt !== e.target.value));
-  };
-
+const Navbar = () => {
   return (
-    <div className="container">
-      <h2>ConfigDrift Validator</h2>
-      <button className="open-button" onClick={() => setShowModal(true)}>
-        Open Validator
-      </button>
-
-      {showModal && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <h3>Config Validator</h3>
-
-            <textarea placeholder="Text Area 1" className="textarea"></textarea>
-            <textarea placeholder="Text Area 2" className="textarea"></textarea>
-            <textarea placeholder="Text Area 3" className="textarea"></textarea>
-
-            <label>Select an Option:</label>
-            <select className="select" value={selectedOption} onChange={handleSelectChange}>
-              <option value="">--Select--</option>
-              {availableOptions.map((opt) => (
-                <option key={opt} value={opt}>{opt}</option>
-              ))}
-            </select>
-
-            <label>Multi-Select Options:</label>
-            <select multiple className="select" value={multiSelectOptions}>
-              {multiSelectOptions.map((opt) => (
-                <option key={opt} value={opt}>{opt}</option>
-              ))}
-            </select>
-
-            <div className="button-container">
-              <button className="close-button" onClick={() => setShowModal(false)}>Close</button>
-              <button className="submit-button" onClick={() => alert("Submitted!")}>Submit</button>
-            </div>
-          </div>
-        </div>
-      )}
+    <div className="sidebar">
+      <h2>Categories</h2>
+      <ul>
+        <li>Category 1
+          <ul>
+            <li><a href="#">Link 1</a></li>
+            <li><a href="#">Link 2</a></li>
+            <li><a href="#">Link 3</a></li>
+          </ul>
+        </li>
+        <li>Category 2
+          <ul>
+            <li><a href="#">Link 1</a></li>
+            <li><a href="#">Link 2</a></li>
+            <li><a href="#">Link 3</a></li>
+          </ul>
+        </li>
+        <li>Category 3
+          <ul>
+            <li><a href="#">Link 1</a></li>
+            <li><a href="#">Link 2</a></li>
+            <li><a href="#">Link 3</a></li>
+          </ul>
+        </li>
+      </ul>
     </div>
   );
 };
 
-export default ConfigDriftValidator;
+export default Navbar;
 ```
 
 ---
 
-### **CSS Styling (ConfigDriftValidator.css)**
+### **2. Form.js**  
+This component contains four text areas, a select dropdown, a multi-select dropdown, a compare button, and a refresh button.
+
+```jsx
+import React, { useState } from "react";
+import "./Form.css";
+
+const options = ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"];
+
+const Form = () => {
+  const [selectedOption, setSelectedOption] = useState("");
+  const [multiSelectOptions, setMultiSelectOptions] = useState([]);
+  const [remainingOptions, setRemainingOptions] = useState(options);
+
+  const handleSelectChange = (e) => {
+    const value = e.target.value;
+    setSelectedOption(value);
+    setMultiSelectOptions((prev) => [...prev, value]);
+    setRemainingOptions(options.filter((opt) => ![...multiSelectOptions, value].includes(opt)));
+  };
+
+  const handleMultiSelectChange = (e) => {
+    const selectedValues = Array.from(e.target.selectedOptions, (option) => option.value);
+    setMultiSelectOptions(selectedValues);
+    setRemainingOptions(options.filter((opt) => !selectedValues.includes(opt)));
+  };
+
+  const handleRefresh = () => {
+    setSelectedOption("");
+    setMultiSelectOptions([]);
+    setRemainingOptions(options);
+  };
+
+  return (
+    <div className="form-container">
+      <textarea placeholder="Text Area 1"></textarea>
+      <textarea placeholder="Text Area 2"></textarea>
+      <textarea placeholder="Text Area 3"></textarea>
+      <textarea placeholder="Text Area 4"></textarea>
+
+      <select value={selectedOption} onChange={handleSelectChange}>
+        <option value="">Select an option</option>
+        {remainingOptions.map((opt) => (
+          <option key={opt} value={opt}>{opt}</option>
+        ))}
+      </select>
+
+      <select multiple value={multiSelectOptions} onChange={handleMultiSelectChange}>
+        {multiSelectOptions.map((opt) => (
+          <option key={opt} value={opt}>{opt}</option>
+        ))}
+      </select>
+
+      <div className="buttons">
+        <button>Compare</button>
+        <button onClick={handleRefresh}>Refresh</button>
+      </div>
+    </div>
+  );
+};
+
+export default Form;
+```
+
+---
+
+### **3. App.js**  
+This is the main app component, which includes the navbar and form.
+
+```jsx
+import React from "react";
+import Navbar from "./components/Navbar";
+import Form from "./components/Form";
+import "./App.css";
+
+const App = () => {
+  return (
+    <div>
+      <header className="app-header">
+        <h1>My App</h1>
+      </header>
+      <div className="app-container">
+        <Navbar />
+        <Form />
+      </div>
+    </div>
+  );
+};
+
+export default App;
+```
+
+---
+
+### **4. App.css**  
+This file contains the styles for the app.
+
 ```css
-/* Container */
-.container {
-  text-align: center;
-  padding: 20px;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
 }
 
-/* Open Button */
-.open-button {
-  padding: 10px 15px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: #007bff;
+.app-header {
+  background-color: red;
   color: white;
-  border: none;
-  border-radius: 5px;
-}
-
-.open-button:hover {
-  background-color: #0056b3;
-}
-
-/* Modal Overlay */
-.modal-overlay {
+  padding: 15px;
+  text-align: left;
+  font-size: 24px;
+  width: 100%;
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.app-header::after {
+  content: "";
+  display: block;
+  height: 5px;
+  background-color: yellow;
+}
+
+.app-container {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-top: 70px;
 }
 
-/* Modal Box */
-.modal {
-  background: white;
+.sidebar {
+  width: 200px;
+  background-color: #f4f4f4;
+  padding: 15px;
+  height: 100vh;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin-bottom: 10px;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: black;
+}
+
+.form-container {
+  flex: 1;
   padding: 20px;
-  border-radius: 5px;
-  text-align: center;
-  width: 300px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Textarea */
-.textarea {
+textarea {
   width: 100%;
   height: 50px;
-  margin: 5px 0;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  margin-bottom: 10px;
 }
 
-/* Select Dropdowns */
-.select {
+select {
   width: 100%;
-  margin: 5px 0;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  margin-bottom: 10px;
 }
 
-/* Button Container */
-.button-container {
+.buttons {
   display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-
-/* Close and Submit Buttons */
-.close-button, .submit-button {
-  padding: 8px 12px;
-  font-size: 14px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.close-button {
-  background-color: red;
-  color: white;
-}
-
-.close-button:hover {
-  background-color: darkred;
-}
-
-.submit-button {
-  background-color: green;
-  color: white;
-}
-
-.submit-button:hover {
-  background-color: darkgreen;
+  gap: 10px;
 }
 ```
 
 ---
 
-### **How to Use**
-1. Save `ConfigDriftValidator.js` inside your React project (`src/components/`).
-2. Save `ConfigDriftValidator.css` in the same folder.
-3. Import and use the component in your main App file (`App.js`):
-   ```jsx
-   import React from "react";
-   import ConfigDriftValidator from "./components/ConfigDriftValidator";
-
-   function App() {
-     return (
-       <div>
-         <ConfigDriftValidator />
-       </div>
-     );
-   }
-
-   export default App;
+### **How to Run the Project**
+1. **Initialize React App**  
+   ```sh
+   npx create-react-app my-app
+   cd my-app
    ```
-4. Run your project with `npm start` or `yarn start`.
 
-This keeps your **React logic separate from styling**, making it modular and reusable. Let me know if you need any modifications!
+2. **Replace `src` Folder**  
+   Replace the files inside `src` with the ones above.
+
+3. **Start the App**  
+   ```sh
+   npm start
+   ```
+
+---
+
+### **Functionality Overview**
+- The navbar has three categories with three links each.  
+- The form has:
+  - Four text areas  
+  - A single select dropdown  
+  - A multi-select dropdown that updates dynamically  
+  - A **Compare** button (does nothing for now)  
+  - A **Refresh** button that resets the form  
+
+Would you like any modifications or additional functionality?
