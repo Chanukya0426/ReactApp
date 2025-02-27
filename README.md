@@ -1,3 +1,28 @@
+<div className="input-field">
+  <select name="referenceEnv" value={formData.referenceEnv} onChange={handleChange}>
+    <option value="" disabled hidden>Reference Environment</option>
+    {envOptions.map((env) => (
+      <option key={env} value={env}>{env}</option>
+    ))}
+  </select>
+</div>
+
+<div className="input-field">
+  <select name="targetEnv" value={formData.targetEnv} onChange={handleChange} multiple>
+    <option value="" disabled hidden>Target Environment</option>
+    {envOptions
+      .filter(env => env !== formData.referenceEnv) // Exclude selected referenceEnv
+      .map(env => (
+        <option key={env} value={env}>{env}</option>
+      ))
+    }
+  </select>
+</div>
+
+
+
+
+
 
 Here’s the modified `Form.js` and `Form.css` to match your updated layout requirements:  
 
